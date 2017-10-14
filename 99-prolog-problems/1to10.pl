@@ -41,3 +41,11 @@ palindrome(L) :- reverse(L, L).
 my_flatten([], []).
 my_flatten([H|T], [H|X]) :- not(is_list(H)), my_flatten(T, X).
 my_flatten([H|T], X) :- is_list(H), my_flatten(H, X1), my_flatten(T, X2), append(X1, X2, X).
+
+% Problem 8
+% Eliminate consecutive duplicates of list elements.
+
+compress([], []).
+compress([X], [X]).
+compress([H,H|T], X) :- compress([H|T], X).
+compress([H1,H2|T], [H1|X]) :- compress([H2|T], X).
