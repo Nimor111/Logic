@@ -45,4 +45,4 @@ pair2(L, [X, Y]) :- append([_, [X], _, [Y], _], L).
 
 gen_hypercube_edge(N, V, [X, Y]) :- gen_vertices(N, N, V), pair2(V, [X, Y]), bit_differences(X, Y, D), D == 1.
 
-gen_hypercube(N, V, Z) :- gen_vertices(N, N, V), findall(E, gen_hypercube_edge(N, V, E), Z).
+gen_hypercube(N, V, E) :- gen_vertices(N, N, V), gen_hypercube_edge(N, V, E).
