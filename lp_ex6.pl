@@ -45,9 +45,11 @@ last([_|L], X) :- last(L, X).
 
 first([X|_], X).
 
-does_not_accept_word([AL, Q, S, F, D], L, W) :- first(W, A), not(append([[P, A, P1]], L1, L)), not(P == S).
-does_not_accept_word([AL, Q, S, F, D], [P | L1], [_|W]) :- not(mem2(P, D)).
-does_not_accept_word(T, L, W) :- append([_, [A, B], _], W), append([_, [[P1, A, P2], [P3, B, P4]], _], L), not(P2 == P3).
-does_not_accept_word([AL, Q, S, F, D], L, W) :- last(W, A), not(append(L1, [[P, A, P1]], L)), not(mem2(P1, F)).
+does_not_accept_word_with_path([AL, Q, S, F, D], L, W) :- first(W, A), first(L, [P, A1, _]), P \= S.
+does_not_accept_word_with_path([AL, Q, S, F, D], L, W) :- append([_, [P|_]], L), not(mem2(P, D)).
+does_not_accept_word_with_path(T, L, W) :- append(_, [[P1, A, P2], [P3, B, P4] | _], L), not(P2 == P3).
+does_not_accept_word_with_path([AL, Q, S, F, D], L, W) :- last(W, A), last(L, [P, A1, P1]), not(mem2(P1, F)).
 
-accepts_word(T, L, W) :- not(does_not_accept_word(T, L, W)).
+accepts_word_with_path(T, L, W) :- not(does_not_accept_word_with_path(T, L, W)).
+
+accepts_word([AL, Q, S, F, D], W) :- gen_list(Q, W, L), accepts_word_with_path([AL, Q, S, F, D], L, W).
