@@ -1,5 +1,9 @@
-pow(_, 0, N) :- N is 1.
-pow(X, Y, N) :- Y1 is Y-1, pow(X, Y1, N1), N is X*N1.
+pow(_, 0, 1).
+pow(X, Y, N) :- Y > 0, Y1 is Y-1, pow(X, Y1, N1), N is X*N1.
+
+is_not_pow(X, Y, N) :- pow(X, Y, N1), N1 \= N.
+
+is_pow(X, Y, N) :- not(is_not_pow(X, Y, N)).
 
 mem2(X, [X|_]).
 mem2(X, [_|L1]) :- mem2(X, L1).
