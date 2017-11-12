@@ -22,7 +22,7 @@ walk(E, U, W, V) :- mem2([U, X], E),
 not_connected(V, E) :- app2(_, [U, W|_], V), not(path(V, E, U, W)).
 connected(V, E) :- not(not_connected(V, E)).
 
-gen_path(E, U, W, V, [U, W]) :- mem2([U, W], E).
+gen_path(E, U, W, V, [U, W]) :- mem2([U, W], E), not(mem2(W, V)).
 gen_path(E, U, W, V, [U | P]) :- mem2([U, X], E), not(mem2(X, V)), gen_path(E, X, W, [X | V], P).
 
 gen_weight_of_paths(E, U, W, V, C) :- mem2([U, W, C], E).
