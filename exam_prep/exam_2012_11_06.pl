@@ -9,15 +9,23 @@ is_subsequence([], _).
 is_subsequence([X|XS], [X|L]) :- is_subsequence(XS, L), !.
 is_subsequence([X|XS], [_|L]) :- is_subsequence([X|XS], L), !.
 
-not_common_subsequence(XS, LS) :- member(L, LS), not(is_subsequence(XS, L)).
+not_common_subsequence(XS, LS) :- member(L, LS),
+                                  not(is_subsequence(XS, L)).
 
 common_subsequence(XS, LS) :- not(not_common_subsequence(XS, LS)).
 
-not_longest_common_subsequence(XS, L, LS) :- subset(L, S), common_subsequence(S, LS), length(S, N), length(XS, N1), N > N1.
+not_longest_common_subsequence(XS, L, LS) :- subset(L, S),
+                                             common_subsequence(S, LS),
+                                             length(S, N),
+                                             length(XS, N1),
+                                             N > N1.
 
 head([X|_], X).
 
-longest_subsequence(L, M) :- head(L, X), subset(X, M), common_subsequence(M, L), not(not_longest_common_subsequence(M, X, L)), !.
+longest_subsequence(L, M) :- head(L, X),
+                             subset(X, M),
+                             common_subsequence(M, L),
+                             not(not_longest_common_subsequence(M, X, L)), !.
 
 % ex. 2 - Relation time
 
