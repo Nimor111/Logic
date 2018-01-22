@@ -26,6 +26,17 @@ cartesian_product([A|XS], B, CP) :- cartesian_product1(A, B, C), cartesian_produ
 
 cartesian_square(A, C) :- cartesian_product(A, A, C).
 
+natural(0).
+natural(N) :- natural(N1), N is N1 + 1.
+
+gen_pairs(A, B) :- natural(N), between2(0, N, B), A is N - B.
+
+divisors_other_than_1(0).
+divisors_other_than_1(1).
+divisors_other_than_1(A) :- A1 is A - 1, between(2, A1, B), A mod B =:= 0.
+
+prime(A) :- not(divisors_other_than_1(A)).
+  
 % find if there's path between two nodes in a graph
 not_edge(V, E, A, B) :- mem2(A, V), mem2(B, V), not(mem2([A, B], E)).
 edge(V, E, A, B) :- not(not_path(V, E, A, B)).
