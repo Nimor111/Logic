@@ -14,6 +14,18 @@ permutation2([A|L], P) :- permutation2(L, P1), app2(S, F, P1), app2(S, [A|F], P)
 between2(I, J, I) :- I =< J.
 between2(I, J, K) :- I + 1 =< J, I1 is I + 1, between2(I1, J, K).
 
+split([], [], []).
+split([A|XS], [A|YS], ZS) :- split(XS, YS, ZS).
+split([A|XS], YS, [A|ZS]) :- split(XS, YS, ZS).
+
+cartesian_product1(_, [], []).
+cartesian_product1(A, [X|XS], [[A, X] | YS]) :- cartesian_product1(A, XS, YS).
+
+cartesian_product([], _, []).
+cartesian_product([A|XS], B, CP) :- cartesian_product1(A, B, C), cartesian_product(XS, B, C1), app2(C, C1, CP), !.
+
+cartesian_square(A, C) :- cartesian_product(A, A, C).
+
 % find if there's path between two nodes in a graph
 not_edge(V, E, A, B) :- mem2(A, V), mem2(B, V), not(mem2([A, B], E)).
 edge(V, E, A, B) :- not(not_path(V, E, A, B)).
