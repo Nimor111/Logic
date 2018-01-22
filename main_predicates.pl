@@ -33,13 +33,12 @@ gen_pairs(A, B) :- natural(N), between2(0, N, B), A is N - B.
 
 divisors_other_than_1(0).
 divisors_other_than_1(1).
-divisors_other_than_1(A) :- A1 is A - 1, between(2, A1, B), A mod B =:= 0.
+divisors_other_than_1(A) :- AS is round(sqrt(A)), between(2, AS, B), A mod B =:= 0.
 
 prime(A) :- not(divisors_other_than_1(A)).
   
 % find if there's path between two nodes in a graph
-not_edge(V, E, A, B) :- mem2(A, V), mem2(B, V), not(mem2([A, B], E)).
-edge(V, E, A, B) :- not(not_path(V, E, A, B)).
+edge(E, A, B) :- mem2([A, B], E).
 
 path(E, A, B) :- walk(E, A, B, []).
 walk(E, A, B, V) :- mem2([A, X], E),
